@@ -94,17 +94,17 @@
         };
         that.jsReference[0].parentNode.insertBefore(node,that.jsReference[0]);
     },
-    /* 判断是否加载依赖文件或者独立的模块 在这里并不执行任何实质性的加载而是执行递归判断文件依赖性然后调用_load进行加载 */
+    /* 判断是否加载依赖文件或者独立的模块 在这里并不执行任何实质性的加载而是执行递归判断文件依赖性然后调用load进行加载 */
     check:function(deps,cb){
         var name=deps.join(''),
             mod=this.getMod(name),
             that=this,
-            path=mod.path,
-        /* 它是被_load cb 所引用 */
-        callback=function (){
-            that.loadList[name]=1;/* 代表已经加载完毕了 函数执行完毕 开始准备执行回调函数 */
-            cb();
-        };
+            path=mod.path;
+        /* 它是被load fn 所引用 */
+        var callback=function (){
+                that.loadList[name]=1;/* 代表已经加载完毕了 函数执行完毕 开始准备执行回调函数 */
+                cb();
+            };
         /* 比如run依赖h执行 在框架内部会开始加载run 也就是返回函数 然后执行h */
         if(mod.requires){
             this.check(mod.requires,(
@@ -154,7 +154,10 @@
         return {
             /* 运行方法 */
             run:function(){
-                var args=[].slice.call(arguments),fn,id;
+                var args=[].slice.call(arguments),
+                    fn,
+                    id,
+                    len=parseInt(args.length,10);
                 that.uid++;
                 /* 加载核心库 */
                 if(that.config.auto && ( that.loadList[that.config.coreLib.join('')] !== true ) && ( (that.uid>1) !== true ) ){
@@ -163,7 +166,7 @@
                     });
                     return M;
                 }
-                if( ( (that.loadList[args[0]]===1) !== true ) ){
+                if( (len>0) && ( (that.loadList[args[0]]===1) !== true ) ){
                     if(typeof args[args.length-1]==='function'){
                         fn=args.pop();
                     }

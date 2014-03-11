@@ -1,9 +1,9 @@
-M
+M.js
 =
 
-这是一个轻量级的web前端框架，实现前端脚本的模块化加载，js函数的队列/异步执行，CSS样式注入。
+简介：这是一个轻量级的web前端框架，实现前端脚本的模块化加载，js函数的队列/异步执行，CSS样式注入。
 
-###API
+###框架API调用方法
 - 队列执行函数
 ```javascript
 // M.when();将函数排入队列
@@ -44,4 +44,12 @@ M.css([
 );
 // 也可以这样
 M.css('.a{margin:0;}');
+```
+- 关闭自动加载
+```html
+<script type="text/javascript" src="./js/M.js" auto="false"></script>
+```
+- 重新指定核心库
+```html
+<script type="text/javascript" src="./js/M.js" core="./js/sizzle.js"></script>
 ```

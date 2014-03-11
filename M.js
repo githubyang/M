@@ -185,7 +185,7 @@
                 return M;
             },
             /* 批量设置模块的方法 */
-            SET:function(m){
+            set:function(m){
                 if(m){
                     for(var a in m){
                         that.config.model[a]=m[a];
@@ -194,7 +194,7 @@
                 return M;
             },
             /* CSS注入方法 */
-            CSS:function(s){
+            css:function(s){
                 var css=document.getElementById('addCss');
                 if(!css){
                     css=document.createElement('style');

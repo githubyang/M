@@ -167,7 +167,7 @@
                     return M;
                 }
                 if( (len>0) && ( (that.loadList[args[0]]===1) !== true ) ){
-                    if(typeof args[args.length-1]==='function'){
+                    if(typeof args[len-1]==='function'){
                         fn=args.pop();
                     }
                     id=args.join('');

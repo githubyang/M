@@ -14,7 +14,7 @@ M.when('B',function(){
     console.log('我是列队B里面的函数');
 });
 // M.trigger();执行队列里面的函数
-M.trigger('B').('A');//函数执行 B函数 A函数
+M.trigger('B').trigger('A');//函数执行 B函数 A函数
 ```
 - 外部脚本加载，也叫模块化加载，有一种装逼的叫法叫异步加载。
 ```javascript

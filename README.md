@@ -40,13 +40,14 @@ M.run('d',function(){});
 ```
 - CSS样式注入
 ```javascript
-M.css([
+// 两个参数 第一个参数是标示符 必须唯一，第二个是注入的内容
+M.css('a',[
         '.a{margin:0;}',
         '.b{text-decoration:none;}'
     ].join('\n')
 );
 // 也可以这样
-M.css('.a{margin:0;}');
+M.css('b',.a{margin:0;}');
 ```
 - 关闭自动加载
 ```html

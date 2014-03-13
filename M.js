@@ -5,8 +5,14 @@
  * 兼容性：几乎兼容所有现代浏览器
  * 性能：尚未测试 但能保证她绝对不是最慢的
  * 开发者：单骑闯天下
- * 最后更新时间：2014.3.11
- * 版本：v 1.0.0
+ * 最后更新时间：2014.3.13
+ * 版本：v 1.0.1
+ * ---------------------- 项目历程 ------------------
+ * # v1.0.0
+ * 2013年12月份开始构思js模块化加载
+ * 2014年3月11框架发布并且定义名称为M.js
+ * # v1.0.1
+ * 2014年3月12日修正css注入的bug
  * ------------------------------------------------*/
 ;({
     /* 核心库的配置文件 */
@@ -20,9 +26,11 @@
     map:{},/* 队列执行的字面量 */
     rmap:{},/* 队列执行的字面量 */
     jsReference:{},/* 加载外部模块参考位置 */
+    reference:{},/* 指定的位置 */
+    cssArr:{},/* 存储已注入css的索引 */
     loaded:{},/* 加载完成 readyState */
     loadList:{},/* 函数执行完毕 开始准备执行回调函数 */
-    version:'1.0.0',
+    version:'1.0.1',
     /* 负责初始化 */
     init:function(){
         var that=this;
@@ -34,6 +42,7 @@
                 that.jsReference[0] = files[n];
                 return files[n];
             }(document));
+            that.reference[0]=document.body.firstChild;
             (function(a){
                 var obj=a,
                     initAuto=obj.getAttribute('auto'),/* 是否关闭加载核心库 */
@@ -197,18 +206,21 @@
                 return M;
             },
             /* CSS注入方法 */
-            css:function(s){
+            css:function(a,s){
                 var css=document.getElementById('addCss');
                 if(!css){
                     css=document.createElement('style');
                     css.type='text/css';
                     css.id='addCss';
-                    that.jsReference[0].parentNode.insertBefore(css,that.jsReference[0]);
+                    that.reference[0].parentNode.insertBefore(css,that.reference[0]);
                 }
-                if(css.styleSheet){
-                    css.styleSheet.cssText=css.styleSheet.cssText + s;
-                }else{
-                    css.appendChild(document.createTextNode(s));
+                if( (that.cssArr[0]===a) !== true ){
+                    that.cssArr[0]=a;
+                    if(css.styleSheet){
+                        css.styleSheet.cssText=css.styleSheet.cssText + s;
+                    }else{
+                        css.appendChild(document.createTextNode(s));
+                    }
                 }
                 return M;
             },
